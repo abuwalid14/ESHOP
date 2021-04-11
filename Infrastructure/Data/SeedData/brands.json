@@ -1,0 +1,26 @@
+[
+  {
+    "Id": 1,
+    "Name": "Classic"
+  },
+  {
+    "Id": 2,
+    "Name": "New Brand"
+  },
+  {
+    "Id": 3,
+    "Name": "Casion "
+  },
+  {
+    "Id": 4,
+    "Name": "Rela"
+  },
+  {
+    "Id": 5,
+    "Name": "Smart"
+  },
+  {
+    "Id": 6,
+    "Name": "Visual"
+  }
+]
