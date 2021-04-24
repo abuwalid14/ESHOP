@@ -15,3 +15,18 @@
 font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 font-style: unset;
 }
+a{
+    text-decoration: none;
+    color: #343a40;
+    &.active{
+        color:rgb(95, 42, 165);
+        font-weight: bolder;
+     background-color: #c5d2df;
+     border-radius: 10px;
+    }
+   
+}
+.logo{
+    cursor: pointer;
+    margin-left: 20px;
+}
