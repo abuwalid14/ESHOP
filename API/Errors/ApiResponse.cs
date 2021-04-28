@@ -7,24 +7,22 @@ namespace API.Errors
         public ApiResponse(int statusCode, string message = null)
         {
             StatusCode = statusCode;
-            Message = message ?? GetDefaultMessageForStatusCode(StatusCode);
+            Message = message ?? GetDefaultMessageForStatusCode(statusCode);
         }
 
-
         public int StatusCode { get; set; }
-        public string Message{ get; set;}
+        public string Message { get; set; }
 
-
-        
         private string GetDefaultMessageForStatusCode(int statusCode)
         {
-            return StatusCode switch{
-                    400 => "A bad request, you have made",
-                    401 => " You are Not Authorized",
-                    404 => "The Resource Was Not Found",
-                    500 => "An Error Occured during the request",
-                    _ => null
-                    };
+            return statusCode switch
+            {
+                400 => "A bad request, you have made",
+                401 => "Authorized, you are not",
+                404 => "Resource found, it was not",
+                500 => "An Error occur during the request.",
+                _ => null
+            };
         }
     }
 }

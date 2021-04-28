@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Basket, IBasket, IBasketItem, IBasketTotals} from '../shared/models/basket';
+import { Basket, IBasket, IBasketItem, IBasketTotals } from '../shared/models/basket';
 
 import { IProduct } from '../shared/models/product';
 
@@ -16,11 +16,20 @@ export class BasketService {
   basket$ = this.basketSource.asObservable();
   private basketTotalSource = new BehaviorSubject<IBasketTotals>(null);
   basketTotal$ = this.basketTotalSource.asObservable();
-
-
+  shipping = 0;
 
   constructor(private http: HttpClient) { }
 
+  createPaymentIntent() {
+    return this.http.post(this.baseUrl + 'payments/' + this.getCurrentBasketValue().id, {})
+      .pipe(
+        map((basket: IBasket) => {
+          this.basketSource.next(basket);
+          console.log(this.getCurrentBasketValue());
+        })
+      )
+  }
+  
 
   
   getBasket(id: string) {
@@ -28,21 +37,19 @@ export class BasketService {
       .pipe(
         map((basket: IBasket) => {
           this.basketSource.next(basket);
-         this.calculateTotals();
-    
-       
+          this.shipping = basket.shippingPrice;
+          this.calculateTotals();
         })
-      );
+      )
   }
 
   setBasket(basket: IBasket) {
     return this.http.post(this.baseUrl + 'basket', basket).subscribe((response: IBasket) => {
       this.basketSource.next(response);
       this.calculateTotals();
-
     }, error => {
       console.log(error);
-    });
+    })
   }
 
   getCurrentBasketValue() {
@@ -101,12 +108,13 @@ export class BasketService {
       console.log(error);
     })
   }
+
   private calculateTotals() {
     const basket = this.getCurrentBasketValue();
     const shipping = 0;
     const subtotal = basket.items.reduce((a, b) => (b.price * b.quantity) + a, 0);
     const total = subtotal + shipping;
-        this.basketTotalSource.next({shipping,total,subtotal});
+    this.basketTotalSource.next({shipping, total, subtotal});
   }
 
 

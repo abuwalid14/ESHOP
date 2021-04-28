@@ -14,7 +14,7 @@ import {ShopParams} from "../shared/models/shopParams";
 })
 export class ShopComponent implements OnInit {
   products : IProduct[];
-  @ViewChild('search',{static: true}) searchTerm : ElementRef;
+  @ViewChild('search',{static: false}) searchTerm : ElementRef;
   brands: IBrand[];
   types : IType[];
   totalCount : number;
